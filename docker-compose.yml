@@ -1,0 +1,10 @@
+version: "3"
+services:
+  dev:
+    build: ./
+    image: dev:1.0.0
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/develop
+    working_dir: /develop
