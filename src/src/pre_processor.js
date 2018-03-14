@@ -1,26 +1,28 @@
 export default function (resGrep) {
-  const REPO = {};
-  const ITEMS = resGrep.split('\n');
+  return new Promise((resolve, reject) => {
+      const REPO = {};
+      const ITEMS = resGrep.split('\n');
 
-  for(let idx in ITEMS) {
-    const ITEM = ITEMS[idx];
-    if(!ITEM) {
-      continue;
-    }
+      for(let idx in ITEMS) {
+        const ITEM = ITEMS[idx];
+        if(!ITEM) {
+          continue;
+        }
 
-    const INFO = ITEM.split(':');
-    
-    const STATIC_FILE_PATH = INFO[0];
-    const STATIC_URL = INFO[1];    
-    
-    let staticUrls = REPO[STATIC_FILE_PATH];
+        const INFO = ITEM.split(':');
+        
+        const STATIC_FILE_PATH = INFO[0];
+        const STATIC_URL = INFO[1];    
+        
+        let staticUrls = REPO[STATIC_FILE_PATH];
 
-    if(!staticUrls) {
-      staticUrls = REPO[STATIC_FILE_PATH] = [];
-    }
-    
-    staticUrls.push(STATIC_URL);
+        if(!staticUrls) {
+          staticUrls = REPO[STATIC_FILE_PATH] = [];
+        }
+        
+        staticUrls.push(STATIC_URL);
+      }
+
+      resolve(REPO)
+    });
   }
-
-  return REPO;
-}

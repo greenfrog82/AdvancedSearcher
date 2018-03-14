@@ -23,15 +23,16 @@ grep.stdout.on('data', (data) => {
 
 grep.stdout.on('close', (code) => {
   console.log(`grep process exited with code ${code}`);
-  const REPO = preProcess(resGrep);
-  console.log(REPO);
-
-  process(REPO, RESOURCE_PATH);
+  preProcess(resGrep)
+  .then(process)
+  .catch((err) => {
+    console.error(`-- Error Handler : ${err}`);
+  })
+  .then(() => { // This is for finally
+    console.info('-- Finish');
+  });
 });
 
 grep.stdout.on('error', (err) => {
   console.log(`Error ${err}`);
 });
-
-
-console.error('test');
