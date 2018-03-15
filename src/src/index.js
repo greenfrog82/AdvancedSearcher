@@ -15,6 +15,7 @@ const TEMPLATE_PATH = {
 const grep = spawn('grep',['-Pro', "[\"|\'](/static/.+?)[\"|\']", TEMPLATE_PATH.app]);
 
 let resGrep = '';
+const report = {};
 
 grep.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
@@ -23,20 +24,12 @@ grep.stdout.on('data', (data) => {
 
 grep.stdout.on('close', (code) => {
   console.log(`grep process exited with code ${code}`);
-  preProcess(resGrep, RESOURCE_PATH)
-  .then(process)
-  .catch((err) => {
-    console.error(`-- Error Handler : ${err}`);
-  })
-  .then((param) => { // This is for finally
-    console.info('-- Finish', param);
-  });
-  console.log('--- 1');
+  const repo = preProcess(resGrep)
+  process(repo, RESOURCE_PATH, report, 'app');
+  console.log('>>> ', report);
+
 });
 
 grep.stdout.on('error', (err) => {
   console.log(`Error ${err}`);
 });
-
-
-console.log('--- 2');
