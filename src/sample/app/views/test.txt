@@ -1,0 +1,2 @@
+'/static/app/' + test
+"/static/app/{{entity}}/{{LANGUAGE_CODE}}/core/js/jquery-1.7.2.min.js"

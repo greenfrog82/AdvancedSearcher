@@ -1,36 +1,31 @@
-import preProcess from './pre_processor'
-import process from './processor'
+import fs from 'fs'
 import { spawn } from 'child_process'
 
-const resourcesPath = {
-  app: '/develop/src/sample_workspace/app/resources/app',
-  shared:'/develop/src/sample_workspace/shared/resources/shared'
-}
+import _preProcess from './pre_processor'
+import _process from './processor'
 
-const templatesPath = {
-  app: '/develop/src/sample_workspace/app/templates',
-  shared: '/develop/src/sample_workspace/shared/templates',
-}
+const cmdArgs = JSON.parse(fs.readFileSync(process.argv[2]));
 
 const promises = [];
 const searchReport = {};
 
-for(let key in templatesPath) {
+for(let key in cmdArgs.projects) {
   promises.push(new Promise(resolve => {
-    const grep = spawn('grep',['-Pro', "[\"|\'](/static/.+?)[\"|\']", templatesPath[key]]);
+    const grep = spawn('grep',['-Pro', `[\"|\'](/${cmdArgs.static_url}/.*?)[\"|\']`, cmdArgs.projects[key]]);
+    
 
     const report = {};
     let resGrep = '';
 
     grep.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`);
+      // console.log(`stdout: ${data}`);
       resGrep += data;
     });
 
     grep.stdout.on('close', (code) => {
-      console.log(`grep process exited with code ${code}`);
-      const repo = preProcess(resGrep)
-      process(repo, resourcesPath, report, key);
+      // console.log(`grep _process exited with code ${code}`);
+      const repo = _preProcess(resGrep)
+      _process(repo, cmdArgs.resources, report, key, cmdArgs.static_url);
       
       searchReport[key] = report;
       resolve(report);
@@ -44,6 +39,5 @@ for(let key in templatesPath) {
 
 Promise.all(promises)
 .then(param => {
-  console.log(param);
-  console.log(searchReport);
+  console.log(JSON.stringify(searchReport, null, 2));
 })
