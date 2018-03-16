@@ -4,7 +4,7 @@ export default function (resGrep) {
 
   for(let idx in items) {
     const item = items[idx];
-    if(!item) {
+    if(!item || item.includes('Binary file')) {
       continue;
     }
 
