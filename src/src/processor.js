@@ -41,9 +41,27 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
           }
         }
       } catch(err) {
-        // console.log(err);
-        // In this case, this static url is wrong.
-        _addItem(report, WORNG_URLS, staticUrl);
+        for(let key in resPath) {
+          if(!resPath.hasOwnProperty(key) || key == prj) {
+            continue;
+          }
+
+          const staticFilePathOfAnotherPrj = staticUrl.replace(`/${staticUrlKeyword}/${prj}`, `${resPath[key]}/${key}`);
+          try {
+            // In this case, We can change static url another one.
+            fs.accessSync(staticFilePathOfAnotherPrj);
+            
+            const contents = fs.readFileSync(templateFilePath).toString();
+            const anotherStaticUrl = staticUrl.replace(prj, key); 
+            const modifiedContents = contents.replace(staticUrl, anotherStaticUrl);
+
+            fs.writeFileSync(templateFilePath, modifiedContents);
+          } catch(err) {            
+            // console.log('---> ERROR : ', err);
+            // In this case, this static url is wrong.
+            _addItem(report, WORNG_URLS, staticUrl);
+          }
+        }
       }
     }
   }
