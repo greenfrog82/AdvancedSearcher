@@ -3,6 +3,7 @@ import path from 'path'
 
 const WORNG_URLS = 'wrongUrls';
 const DUPLICATED_URLS = 'duplicatedUrls';
+const PROCESSED_URLS = 'processedUrls';
 
 export default function(repo, resPath, report, prj, staticUrlKeyword) {
   for(let key in repo) {
@@ -23,7 +24,8 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
         fs.accessSync(staticFilePath);
 
         if(fs.lstatSync(staticFilePath).isDirectory()) {
-          throw `${staticFilePath} is not file. In this case, this static url is wrong`;
+          _addItem(report, WORNG_URLS, staticUrl);
+          continue;
         } 
 
         for(let key in resPath) {
@@ -48,6 +50,7 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
 
           const staticFilePathOfAnotherPrj = staticUrl.replace(`/${staticUrlKeyword}/${prj}`, `${resPath[key]}/${key}`);
           try {
+            // console.log('---> ', staticFilePathOfAnotherPrj);
             // In this case, We can change static url another one.
             fs.accessSync(staticFilePathOfAnotherPrj);
             
@@ -56,6 +59,8 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
             const modifiedContents = contents.replace(staticUrl, anotherStaticUrl);
 
             fs.writeFileSync(templateFilePath, modifiedContents);
+
+            _addItem(report, PROCESSED_URLS, `${staticUrl} -> ${anotherStaticUrl}`);
           } catch(err) {            
             // console.log('---> ERROR : ', err);
             // In this case, this static url is wrong.
