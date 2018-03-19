@@ -1,4 +1,4 @@
-export default function (resGrep) {
+export default function (resGrep, ignoreUrls) {
   const repo = {};
   const items = resGrep.split('\n');
 
@@ -12,6 +12,20 @@ export default function (resGrep) {
     
     const staticFilePath = info[0];
     const staticUrl = info[1].substring(1, info[1].length - 1);
+    
+    let isContinue = true;
+    if(ignoreUrls) {
+      for(let ignoreUrlsIdx in ignoreUrls) {
+        if(staticUrl.includes(ignoreUrls[ignoreUrlsIdx])) {
+          isContinue = false;
+          break;
+        }
+      }
+    }
+
+    if(!isContinue) {
+      continue;
+    }
 
     let staticUrls = repo[staticFilePath];
 

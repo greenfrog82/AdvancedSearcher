@@ -24,7 +24,7 @@ for(let key in cmdArgs.projects) {
 
     grep.stdout.on('close', (code) => {
       // console.log(`grep _process exited with code ${code}`);
-      const repo = _preProcess(resGrep)
+      const repo = _preProcess(resGrep, cmdArgs.ignore_urls);
       _process(repo, cmdArgs.resources, report, key, cmdArgs.static_url);
       
       searchReport[key] = report;

@@ -23,10 +23,10 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
       try {
         fs.accessSync(staticFilePath);
 
-        if(fs.lstatSync(staticFilePath).isDirectory()) {
-          _addItem(report, WORNG_URLS, templateFilePath, staticUrl);
-          continue;
-        } 
+        // if(fs.lstatSync(staticFilePath).isDirectory()) {
+          // _addItem(report, WORNG_URLS, templateFilePath, staticUrl);
+          // continue;
+        // } 
 
         for(let key in resPath) {
           if(!resPath.hasOwnProperty(key) || key == prj) {

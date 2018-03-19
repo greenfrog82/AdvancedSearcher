@@ -1,5 +1,6 @@
 {
   "static_url": "static",
+  "ignore_urls": ["/static/media"],
   "projects": {
     "app": "/develop/src/sample_workspace/app",
     "shared": "/develop/src/sample_workspace/shared"
