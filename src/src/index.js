@@ -39,5 +39,9 @@ for(let key in cmdArgs.projects) {
 
 Promise.all(promises)
 .then(param => {
-  console.log(JSON.stringify(searchReport, null, 2));
+  const report = JSON.stringify(searchReport, null, 2)
+  console.log(report);
+
+  fs.writeFileSync('./report.json', report);
+  
 })

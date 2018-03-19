@@ -2,3 +2,4 @@ node_modules
 dist
 *.log
 sample_*
+src/report.json

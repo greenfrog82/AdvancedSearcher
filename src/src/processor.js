@@ -24,7 +24,7 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
         fs.accessSync(staticFilePath);
 
         if(fs.lstatSync(staticFilePath).isDirectory()) {
-          _addItem(report, WORNG_URLS, staticUrl);
+          _addItem(report, WORNG_URLS, templateFilePath, staticUrl);
           continue;
         } 
 
@@ -37,7 +37,7 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
           try {
             // In this case, this static url is duplicated.
             fs.accessSync(staticFilePathOfAnotherPrj);
-            _addItem(report, DUPLICATED_URLS, staticUrl);
+            _addItem(report, DUPLICATED_URLS, templateFilePath, staticUrl);
           } catch(err) {            
           
           }
@@ -60,11 +60,22 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
 
             fs.writeFileSync(templateFilePath, modifiedContents);
 
-            _addItem(report, PROCESSED_URLS, `${staticUrl} -> ${anotherStaticUrl}`);
+            _addItem(report, PROCESSED_URLS, templateFilePath, `${staticUrl} -> ${anotherStaticUrl}`);
           } catch(err) {            
             // console.log('---> ERROR : ', err);
-            // In this case, this static url is wrong.
-            _addItem(report, WORNG_URLS, staticUrl);
+            
+            for(let key in resPath) {
+              if(!resPath.hasOwnProperty(key) || key == prj) {
+                continue;
+              }
+              const staticFilePathOfAnotherPrj = staticUrl.replace(`/${staticUrlKeyword}/${key}`, `${resPath[key]}/${key}`);
+
+              try {
+                fs.accessSync(staticFilePathOfAnotherPrj);
+              } catch(err) {
+                _addItem(report, WORNG_URLS, templateFilePath, staticUrl);
+              }
+            }
           }
         }
       }
@@ -72,11 +83,11 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
   }
 }
 
-function _addItem(report, attribute, staticUrl) {
+function _addItem(report, attribute, templateFilePath, staticUrl) {
   if(!report[attribute]) {
     report[attribute] = [];
   }
   if(0 > report[attribute].indexOf(staticUrl)) {
-    report[attribute].push(staticUrl);
+    report[attribute].push(`${templateFilePath} : ${staticUrl}`);
   }
 }
