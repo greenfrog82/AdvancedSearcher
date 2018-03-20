@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-const WORNG_URLS = 'wrongUrls';
+const WRONG_URL = 'wrongUrls';
 const DUPLICATED_URLS = 'duplicatedUrls';
 const PROCESSED_URLS = 'processedUrls';
 
@@ -23,24 +23,19 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
       try {
         fs.accessSync(staticFilePath);
 
-        // if(fs.lstatSync(staticFilePath).isDirectory()) {
-          // _addItem(report, WORNG_URLS, templateFilePath, staticUrl);
-          // continue;
-        // } 
-
         for(let key in resPath) {
           if(!resPath.hasOwnProperty(key) || key == prj) {
             continue;
           }
 
-          const staticFilePathOfAnotherPrj = staticUrl.replace(`/${staticUrlKeyword}/${prj}`, `${resPath[key]}/${key}`);
-          try {
+          // const staticFilePathOfAnotherPrj = staticUrl.replace(`/${staticUrlKeyword}/${prj}`, `${resPath[key]}/${key}`);
+          // try {
             // In this case, this static url is duplicated.
-            fs.accessSync(staticFilePathOfAnotherPrj);
-            _addItem(report, DUPLICATED_URLS, templateFilePath, staticUrl);
-          } catch(err) {            
+            // fs.accessSync(staticFilePathOfAnotherPrj);
+            // _addItem(report, DUPLICATED_URLS, templateFilePath, staticUrl);
+          // } catch(err) {            
           
-          }
+          // }
         }
       } catch(err) {
         for(let key in resPath) {
@@ -62,19 +57,13 @@ export default function(repo, resPath, report, prj, staticUrlKeyword) {
 
             _addItem(report, PROCESSED_URLS, templateFilePath, `${staticUrl} -> ${anotherStaticUrl}`);
           } catch(err) {            
-            // console.log('---> ERROR : ', err);
-            
-            for(let key in resPath) {
-              if(!resPath.hasOwnProperty(key) || key == prj) {
-                continue;
-              }
-              const staticFilePathOfAnotherPrj = staticUrl.replace(`/${staticUrlKeyword}/${key}`, `${resPath[key]}/${key}`);
+            // Before processing data, We have to check this static url is either already processed or not.
+            const staticFilePathOfAnotherPrj = staticUrl.replace(`/${staticUrlKeyword}/${key}`, `${resPath[key]}/${key}`);
 
-              try {
-                fs.accessSync(staticFilePathOfAnotherPrj);
-              } catch(err) {
-                _addItem(report, WORNG_URLS, templateFilePath, staticUrl);
-              }
+            try {
+              fs.accessSync(staticFilePathOfAnotherPrj);
+            } catch(err) {
+              _addItem(report, WRONG_URL, templateFilePath, staticUrl);
             }
           }
         }
