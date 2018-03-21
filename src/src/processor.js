@@ -87,9 +87,12 @@ export default function(repo, currPrj, cmdArgs, report) {
           success = true;
           return true;
         } else if(_perform(templateFilePath, staticUrl, report, cmdArgs, prj, 'cdnetworks', 'common', path)) {
-          success = ture;
+          success = true;
           return true; 
         } else if(_perform(templateFilePath, staticUrl, report, cmdArgs, prj, 'shared', 'common', path)) {
+          success = true;
+          return true;
+        } else if(_perform(templateFilePath, staticUrl, report, cmdArgs, prj, 'cdnetworks_standalone', 'common', path)) {
           success = true;
           return true;
         } else {
