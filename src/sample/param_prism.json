@@ -1,0 +1,7 @@
+{
+  "static_url": "op_media",
+  "replaced_static_url": "static",
+  "ignore_urls": ["/static/media"],
+  "prj_root_path": "/develop/src/sample_workspace",
+  "projects": ["prism_fe", "spectrum_fe"]
+}

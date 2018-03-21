@@ -33,7 +33,9 @@ export default function (resGrep, ignoreUrls) {
       staticUrls = repo[staticFilePath] = [];
     }
     
-    staticUrls.push(staticUrl);
+    if(!staticUrls.includes(staticUrl)) {
+      staticUrls.push(staticUrl);
+    }
   }
 
   return repo; 

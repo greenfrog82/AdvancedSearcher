@@ -1,0 +1,17 @@
+{
+  "spectrum_fe": {
+    "wrongUrls": [
+      "/develop/src/sample_workspace/spectrum_fe/templates/base.html : /op_media/shared/common/css/shared.css",
+      "/develop/src/sample_workspace/spectrum_fe/templates/base.html : /op_media/shared/js/common.js",
+      "/develop/src/sample_workspace/spectrum_fe/templates/base.html : /op_media/shared/js/shared.js"
+    ]
+  },
+  "prism_fe": {
+    "wrongUrls": [
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/shared/common/app.css",
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/media/js/test.js",
+      "/develop/src/sample_workspace/prism_fe/views/test.txt : /op_media/",
+      "/develop/src/sample_workspace/prism_fe/views/test.txt : /op_media/{{entity}}/en-us/js/none.js"
+    ]
+  }
+}

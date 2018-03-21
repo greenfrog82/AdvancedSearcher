@@ -6,9 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist/ && rimraf -r sample_workspace/ && cp -r sample sample_workspace/ && babel ./src --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "start": "npm run build && node dist/index.js ./sample_workspace/param.json",
-    "build_dev": "babel ./src --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "start_dev": "npm run build_dev && node dist/index.js ./sample_workspace/param.json"
+    "start_prism": "npm run build && node dist/index.js ./sample_workspace/param_prism.json",
+    "start_aurora": "npm run build && node dist/index.js ./sample_workspace/param_aurora.json",
+    "build_remain_res": "babel ./src --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "start_prism_remain_res": "npm run build_remain_res && node dist/index.js ./sample_workspace/param_prism.json",
+    "start_aurora_remain_res": "npm run build_remain_res && node dist/index.js ./sample_workspace/param_aurora.json"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

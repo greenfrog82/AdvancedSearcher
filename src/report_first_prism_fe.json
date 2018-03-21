@@ -1,0 +1,29 @@
+{
+  "spectrum_fe": {
+    "processedUrls": [
+      "/develop/src/sample_workspace/spectrum_fe/templates/base.html : /op_media/shared/common/css/common.css -> /static/prism_fe/shared/common/css/common.css",
+      "/develop/src/sample_workspace/spectrum_fe/templates/base.html : /op_media/cdnetworks/common/img/logo.jpg -> /static/prism_fe/cdnetworks/common/img/logo.jpg"
+    ],
+    "wrongUrls": [
+      "/develop/src/sample_workspace/spectrum_fe/templates/base.html : /op_media/shared/common/css/shared.css",
+      "/develop/src/sample_workspace/spectrum_fe/templates/base.html : /op_media/shared/js/common.js",
+      "/develop/src/sample_workspace/spectrum_fe/templates/base.html : /op_media/shared/js/shared.js"
+    ]
+  },
+  "prism_fe": {
+    "processedUrls": [
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/shared/common/css/common.css -> /static/prism_fe/shared/common/css/common.css",
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/shared/en-us/js/common.js -> /static/spectrum_fe/shared/common/js/common.js",
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/app/{{LANGUAGE_CODE}}/js/app.js -> /static/spectrum_fe/shared/common/js/app.js",
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/{{entity}}/{{LANGUAGE_CODE}}/js/another-path.js -> /static/spectrum_fe/shared/common/js/another-path.js",
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/cdnetworks/common/img/logo.jpg -> /static/prism_fe/cdnetworks/common/img/logo.jpg",
+      "/develop/src/sample_workspace/prism_fe/views/test.txt : /op_media/{{entity}}/{{LANGUAGE_CODE}}/js/jquery-1.7.2.min.js -> /static/prism_fe/shared/common/js/jquery-1.7.2.min.js"
+    ],
+    "wrongUrls": [
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/shared/common/app.css",
+      "/develop/src/sample_workspace/prism_fe/templates/base.html : /op_media/media/js/test.js",
+      "/develop/src/sample_workspace/prism_fe/views/test.txt : /op_media/",
+      "/develop/src/sample_workspace/prism_fe/views/test.txt : /op_media/{{entity}}/en-us/js/none.js"
+    ]
+  }
+}

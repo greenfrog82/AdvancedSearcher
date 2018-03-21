@@ -1,0 +1,3 @@
+'/op_media/' + test
+"/op_media/{{entity}}/{{LANGUAGE_CODE}}/js/jquery-1.7.2.min.js"
+'/op_media/{{entity}}/en-us/js/none.js'

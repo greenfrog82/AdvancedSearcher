@@ -9,25 +9,24 @@ const cmdArgs = JSON.parse(fs.readFileSync(process.argv[2]));
 const promises = [];
 const searchReport = {};
 
-for(let key in cmdArgs.projects) {
+cmdArgs.projects.forEach(prjName => {
   promises.push(new Promise(resolve => {
-    const grep = spawn('grep',['-Pro', `[\"|\'](/${cmdArgs.static_url}/.*?)[\"|\']`, cmdArgs.projects[key]]);
+    const grep = spawn('grep',['-Pro', `[\"|\'](/(?:${cmdArgs.static_url}|${cmdArgs.replaced_static_url})/.*?)[\"|\']`, `${cmdArgs.prj_root_path}/${prjName}`]);
     
-
     const report = {};
     let resGrep = '';
 
     grep.stdout.on('data', (data) => {
-      // console.log(`stdout: ${data}`);
+      console.log(`stdout: ${data}`);
       resGrep += data;
     });
 
     grep.stdout.on('close', (code) => {
       // console.log(`grep _process exited with code ${code}`);
       const repo = _preProcess(resGrep, cmdArgs.ignore_urls);
-      _process(repo, cmdArgs.resources, report, key, cmdArgs.static_url);
+      _process(repo, prjName, cmdArgs, report);
       
-      searchReport[key] = report;
+      searchReport[prjName] = report;
       resolve(report);
     });
 
@@ -35,7 +34,7 @@ for(let key in cmdArgs.projects) {
       console.log(`Error ${err}`);
     });
   }));
-}
+});
 
 Promise.all(promises)
 .then(param => {
